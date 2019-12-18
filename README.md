@@ -1,8 +1,10 @@
 # R Markdown Analysis Template
 
-Template repo for R data analysis projects using R Markdown.
+Example structure for R data analysis projects using R Markdown.
 
 ## How to use it
+
+You can either [create a GitHub repo](https://github.com/ngriffiths21/rmd-analysis-template/generate) or clone it locally (`git clone https://github.com/ngriffiths21/rmd-analysis-template.git`).
 
 ```
 ├── data
@@ -39,3 +41,6 @@ Write tests that you can source and run at the end of your analysis notebooks, a
 ### Document
 
 Analysis notebooks should be (in theory) extremely readable and comprehensive, but it may help to keep a high-level summary of the project in one central document. Write up documentation in R Markdown (for easy PDF creation) and save it in `docs`.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
