@@ -28,7 +28,7 @@ Make sure your code writes its output to either `data/working` (for intermediate
 
 ### Write R code
 
-Write code directly in R Markdown documents saved in `notebooks`. See the example [`notebooks/ex_analysis.html`](notebooks/ex_analysis.html) for ideas on how to format these documents.
+Write code directly in R Markdown documents saved in `notebooks`. See the example [`notebooks/ex_analysis.Rmd`](notebooks/ex_analysis.md) for ideas on how to format these documents.
 
 If needed, write helper functions and save them to separate files in the `R` directory, but *only do this if it improves the readability of the analysis*. Writing a helper function only makes sense if the helper function:
 
