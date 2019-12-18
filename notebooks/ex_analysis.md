@@ -1,38 +1,41 @@
----
-title: "R Markdown Analysis Template"
-output: github_document # for rendering on github; change to html_document
----
-
-```{r setup,include=FALSE}
-knitr::opts_chunk$set(echo = T, message = F, comment = NA)
-```
+R Markdown Analysis Template
+================
 
 ## Setup
 
-```{r}
+``` r
 library(tidyverse)
 source("../R/ex_std_error.R")
 ```
 
 Specify which data we will import and use:
 
-```{r}
+``` r
 data_path <- "../data/raw/ex_mtcars.csv"
 ```
 
 ## Part 1: Tidy data
 
-We'll do a short analysis using the `mtcars` dataset. After loading the data, we'll convert `vs` and `am` (which encode engine and transmission types) to factors, since they are really dichotomous variables, not numbers.
+We’ll do a short analysis using the `mtcars` dataset. After loading the
+data, we’ll convert `vs` and `am` (which encode engine and transmission
+types) to factors, since they are really dichotomous variables, not
+numbers.
 
-R Markdown allows you to write code in a format that is meant to be read. To make it as easy as possible to follow, use a predictable format:
+R Markdown allows you to write code in a format that is meant to be
+read. To make it as easy as possible to follow, use a predictable
+format:
 
-- Introduce the process with a function that composes each step (`tidy_mtcars_pipe()`)
-- Write each step as a pure function of the full dataset, in the order they are called
-- End by loading the data and running the pipeline
+  - Introduce the process with a function that composes each step
+    (`tidy_mtcars_pipe()`)
+  - Write each step as a pure function of the full dataset, in the order
+    they are called
+  - End by loading the data and running the pipeline
 
-That way you present the reader with an overview at the beginning, fully explain the steps in the middle, and restrict all side effects (file I/O, assigning global variables) to the end.
+That way you present the reader with an overview at the beginning, fully
+explain the steps in the middle, and restrict all side effects (file
+I/O, assigning global variables) to the end.
 
-```{r}
+``` r
 tidy_mtcars_pipe <- function(df) {
   df %>% 
     recode_vs() %>% 
@@ -40,7 +43,7 @@ tidy_mtcars_pipe <- function(df) {
 }
 ```
 
-```{r}
+``` r
 recode_vs <- function(df) {
   df %>% 
     mutate(vs = factor(vs)) %>% 
@@ -56,7 +59,7 @@ recode_am <- function(df) {
 
 Run the pipeline:
 
-```{r}
+``` r
 ex_mtcars <- read_csv(data_path)
 
 better_mtcars <-
@@ -69,11 +72,12 @@ better_mtcars %>%
 
 ## Part 2: Summary statistics and plots
 
-Now we investigate the relationship between engine type `vs` and horsepower `hp`.
+Now we investigate the relationship between engine type `vs` and
+horsepower `hp`.
 
 We calculate mean and standard error, then plot them:
 
-```{r}
+``` r
 plot_pipe <- function(df) {
   df %>% 
     vs_hp_mean_se() %>% 
@@ -81,7 +85,7 @@ plot_pipe <- function(df) {
 }
 ```
 
-```{r}
+``` r
 # `ex_std_error()` is a helper function in another script
 vs_hp_mean_se <- function(df) {
   df %>% 
@@ -105,14 +109,16 @@ vs_hp_plot <- function(df) {
 
 Plot the association between engine type and horsepower:
 
-```{r}
+``` r
 better_mtcars %>% 
   plot_pipe()
 ```
 
+![](ex_analysis_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
 Save the summary dataset as example output:
 
-```{r}
+``` r
 better_mtcars %>% 
   vs_hp_mean_se() %>% 
   saveRDS("../output/ex_engine_hp.rds")
@@ -122,15 +128,29 @@ better_mtcars %>%
 
 Testing is easy with `testthat::test_file`:
 
-```{r}
+``` r
 library(testthat)
 
 test_file("../tests/ex_test_mtcars.R")
 ```
 
+    v |  OK F W S | Context
+    
+    / |   0       | ex_test_mtcars
+    - |   1       | ex_test_mtcars
+    v |   2       | ex_test_mtcars [0.1 s]
+    
+    == Results =====================================================================
+    Duration: 0.1 s
+    
+    OK:       2
+    Failed:   0
+    Warnings: 0
+    Skipped:  0
+
 Or `assertr` for nice data verification options:
 
-```{r}
+``` r
 library(assertr)
 
 better_mtcars %>% 
@@ -138,3 +158,14 @@ better_mtcars %>%
   verify(nrow(.) == 31, error_fun = error_return)      # mtcars has 32 rows
 ```
 
+    [[1]]
+    verification [is.logical(vs)] failed! (1 failure)
+    
+        verb redux_fn      predicate column index value
+    1 verify       NA is.logical(vs)     NA     1    NA
+    
+    [[2]]
+    verification [nrow(.) == 31] failed! (1 failure)
+    
+        verb redux_fn     predicate column index value
+    1 verify       NA nrow(.) == 31     NA     1    NA
