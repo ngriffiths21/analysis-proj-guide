@@ -1,6 +1,8 @@
 ---
 title: "R Markdown Analysis Example"
-output: github_document
+output:
+  github_document:
+    html_preview: false
 ---
 <!-- github_document produces a github-friendly markdown file -->
 
