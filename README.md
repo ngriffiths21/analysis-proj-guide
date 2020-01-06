@@ -32,14 +32,19 @@ Keep a directory of documents that run your analysis. R Markdown documents are u
 
 ### 4. Write your code so it is as readable as possible
 
-R Markdown allows you to write code in a format that is meant to be read. To make it as easy as possible to follow, use a predictable format.
+R Markdown is designed for sharing code with others by combining code, output and text into a single document. To make it as easy as possible to follow, use a predictable format.
 
 - Write functions that carry out discrete steps of the analysis and arrange them in the order they are called
 - Write each step so that it takes the full dataset as input, modifies it, and returns it
 - Write a function that composes all the steps together (this function can be placed at the top, before the steps, in order to introduce the overall process)
 - Write code that loads the data and runs the pipeline
 
-An example of this format is in [`notebooks/ex_analysis.Rmd`][1]. The goal is to present the reader with an overview at the beginning, fully explain the steps in the middle, and restrict all side effects (file I/O, assigning global variables) to the end.
+An example of this format is in [`notebooks/ex_analysis.Rmd`][1]. The goal is to present the reader with an overview at the beginning, fully explain the steps in the middle, and restrict all the side effects (file I/O, assigning global variables) to the end.
+
+Other helpful tips:
+
+- Think carefully about naming functions and variables, since this can have a big impact on readability
+- Write short functions that only do one thing (I usually aim for <10 lines)
 
 ### 5. If needed, write helper functions, but *only do this if it improves the readability of the analysis*.
 
@@ -53,19 +58,24 @@ See the example [`R/ex_std_error.R`](R/ex_std_error.R).
 
 ### 6. Write tests
 
-Write tests that can be loaded with `source()` and run at the end of the analysis notebooks.
+Write tests that can be loaded with `source()` and run at the end of the analysis notebooks. These can be used to check that your final dataset has the correct number of rows, has columns of the correct type, contains data within expected ranges, etc.
 
-### 7. Document
+### 7. Document if needed
 
-Analysis notebooks should be (in theory) extremely readable and comprehensive, but it may help to keep a high-level summary of the project in one central document. R Markdown is great for writing documentation, too, because it can easily be converted to a PDF.
+Analysis notebooks should be (in theory) extremely readable and comprehensive, but you may want to keep a high-level summary of the project in a central document. R Markdown is great for writing documentation, too, because it can easily be converted to a PDF.
 
-## Notes
+### Summary
 
-To use this project as a template, you can either [create a GitHub repo](https://github.com/ngriffiths21/rmd-analysis-template/generate) or clone it locally (`git clone https://github.com/ngriffiths21/rmd-analysis-template.git`).
+These guidelines have been a helpful way to ensure that projects are readable, reproducible, and easy to share with collaborators. The rest of this project is a simple example of how it could look in practice.
+
+To use this as a template, either [create a GitHub repo](https://github.com/ngriffiths21/rmd-analysis-template/generate) or clone it locally (`git clone https://github.com/ngriffiths21/rmd-analysis-template.git`).
 
 ## References
 
 1. https://r4ds.had.co.nz/r-markdown-workflow.html
+2. https://adv-r.hadley.nz/fp.html
+
+Hadley Wickham's [books](http://hadley.nz/#teaching) are my go-to references on data analysis in R.
 
 ## License
 
