@@ -1,5 +1,7 @@
-R Markdown Analysis Template
+R Markdown Analysis Example
 ================
+
+<!-- github_document produces a github-friendly markdown file -->
 
 ## Setup
 
@@ -20,20 +22,6 @@ We’ll do a short analysis using the `mtcars` dataset. After loading the
 data, we’ll convert `vs` and `am` (which encode engine and transmission
 types) to factors, since they are really dichotomous variables, not
 numbers.
-
-R Markdown allows you to write code in a format that is meant to be
-read. To make it as easy as possible to follow, use a predictable
-format:
-
-  - Introduce the process with a function that composes each step
-    (`tidy_mtcars_pipe()`)
-  - Write each step as a pure function of the full dataset, in the order
-    they are called
-  - End by loading the data and running the pipeline
-
-That way you present the reader with an overview at the beginning, fully
-explain the steps in the middle, and restrict all side effects (file
-I/O, assigning global variables) to the end.
 
 ``` r
 tidy_mtcars_pipe <- function(df) {
@@ -134,15 +122,10 @@ library(testthat)
 test_file("../tests/ex_test_mtcars.R")
 ```
 
-    v |  OK F W S | Context
+    ✔ |  OK F W S | Context
+    ⠏ |   0       | ex_test_mtcars✔ |   2       | ex_test_mtcars
     
-    / |   0       | ex_test_mtcars
-    - |   1       | ex_test_mtcars
-    v |   2       | ex_test_mtcars [0.1 s]
-    
-    == Results =====================================================================
-    Duration: 0.1 s
-    
+    ══ Results ═════════════════════════════════════════════════════════════════════
     OK:       2
     Failed:   0
     Warnings: 0

@@ -1,7 +1,10 @@
 ---
-title: "R Markdown Analysis Template"
-output: github_document # for rendering on github; change to html_document
+title: "R Markdown Analysis Example"
+output:
+  github_document:
+    html_preview: false
 ---
+<!-- github_document produces a github-friendly markdown file -->
 
 ```{r setup,include=FALSE}
 knitr::opts_chunk$set(echo = T, message = F, comment = NA)
@@ -23,14 +26,6 @@ data_path <- "../data/raw/ex_mtcars.csv"
 ## Part 1: Tidy data
 
 We'll do a short analysis using the `mtcars` dataset. After loading the data, we'll convert `vs` and `am` (which encode engine and transmission types) to factors, since they are really dichotomous variables, not numbers.
-
-R Markdown allows you to write code in a format that is meant to be read. To make it as easy as possible to follow, use a predictable format:
-
-- Introduce the process with a function that composes each step (`tidy_mtcars_pipe()`)
-- Write each step as a pure function of the full dataset, in the order they are called
-- End by loading the data and running the pipeline
-
-That way you present the reader with an overview at the beginning, fully explain the steps in the middle, and restrict all side effects (file I/O, assigning global variables) to the end.
 
 ```{r}
 tidy_mtcars_pipe <- function(df) {
@@ -137,4 +132,3 @@ better_mtcars %>%
   verify(is.logical(vs), error_fun = error_append) %>% # vs is a factor
   verify(nrow(.) == 31, error_fun = error_return)      # mtcars has 32 rows
 ```
-
