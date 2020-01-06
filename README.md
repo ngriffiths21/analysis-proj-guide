@@ -1,24 +1,10 @@
-# Organizing an R Markdown data analysis project
+# Reproducible data analysis projects
 
-R has a conventional [folder structure](http://r-pkgs.had.co.nz/package.html#package-structure) for developing packages, but it is not necessarily convenient for a data analysis project. These are the guidelines I follow instead.
-
-```
-├── data
-│   ├── raw
-│   └── working
-├── notebooks
-│   └── *.Rmd
-├── output
-├── R
-│   └── *.R
-├── tests
-│   └── *.R
-└── [docs]
-```
+These are some guidelines I find helpful when working on data analysis projects. I currently use R but the general ideas should apply to any language.
 
 ### 1. Keep a folder of all the raw data in original form and never modify it
 
-All original data is saved to `data/raw/` exactly as received from the source. Once changes are made, the files go in a different folder such as `data/working/`. This ensures that the entire process can be reproduced from the original state of the data.
+All original data should be saved to a directory (here, `data/raw/`) exactly as received from the source. Once changes are made, the files go in a different folder (`data/working/`). This ensures that the entire process can be reproduced from the original state of the data.
 
 ### 2. Don't edit data by hand, write code instead
 
@@ -67,6 +53,20 @@ Analysis notebooks should be (in theory) extremely readable and comprehensive, b
 ### Summary
 
 These guidelines have been a helpful way to ensure that projects are readable, reproducible, and easy to share. The rest of this project is a simple example of how it could look in practice.
+
+```
+├── data
+│   ├── raw
+│   └── working
+├── notebooks
+│   └── *.Rmd
+├── output
+├── R
+│   └── *.R
+├── tests
+│   └── *.R
+└── [docs]
+```
 
 To use this as a template, either [create a GitHub repo](https://github.com/ngriffiths21/rmd-analysis-template/generate) or clone it locally (`git clone https://github.com/ngriffiths21/rmd-analysis-template.git`).
 
