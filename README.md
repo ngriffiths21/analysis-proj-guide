@@ -46,13 +46,13 @@ Other helpful tips:
 - Think carefully about naming functions and variables, since this can have a big impact on readability
 - Write short functions that only do one thing (I usually aim for <10 lines)
 
-### 5. If needed, write helper functions, but *only do this if it improves the readability of the analysis*.
+### 5. If needed, write helper functions (but be careful)
 
-Sometimes it makes sense to write code in separate files and load them to your analysis notebook with `source()`. These functions can be stored in their own directory `R/`. Writing a helper function only makes sense if the helper function is easy to remember, easy to think about, and unrelated to your actual dataset:
+Sometimes it makes sense to write code in separate files and load them to your analysis notebook with `source()`. These functions can be stored in their own directory `R/`. **Only do this when it improves readability**. It should be easy to read the analysis without having to look up the helper function definitions.
 
-- Write helper functions that you can easily understand and remember without having to consult source code. This could be some math, applying a filter, sorting data, etc.
+- Write helper functions that are easy to understand and remember from their names and the way they are called. They should do just what they say, like `mean(x)` and `colnames(df)`.
 - Write functions that will be easy to reason about. The best strategy is to write pure functions, which always return the same thing when given the same inputs, and never produce side-effects like new files or changes to global variables.
-- Don't write helpers that depend on the names of your data columns or other ways you format your data, since these details tend to change.
+- Don't write helpers that depend on the names of your data columns or other ways you format your data, since these details tend to change. Instead of `doSomethingToField1(entiredataframe)`, pass the column you're trying to modify: `doSomething(Field1)`.
 
 See the example [`R/ex_std_error.R`](R/ex_std_error.R).
 
@@ -66,7 +66,7 @@ Analysis notebooks should be (in theory) extremely readable and comprehensive, b
 
 ### Summary
 
-These guidelines have been a helpful way to ensure that projects are readable, reproducible, and easy to share with collaborators. The rest of this project is a simple example of how it could look in practice.
+These guidelines have been a helpful way to ensure that projects are readable, reproducible, and easy to share. The rest of this project is a simple example of how it could look in practice.
 
 To use this as a template, either [create a GitHub repo](https://github.com/ngriffiths21/rmd-analysis-template/generate) or clone it locally (`git clone https://github.com/ngriffiths21/rmd-analysis-template.git`).
 
