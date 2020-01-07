@@ -68,7 +68,7 @@ These guidelines have been a helpful way to ensure that projects are readable, r
 └── [docs]
 ```
 
-To use this as a template, either [create a GitHub repo](https://github.com/ngriffiths21/rmd-analysis-template/generate) or clone it locally (`git clone https://github.com/ngriffiths21/rmd-analysis-template.git`).
+To use this as a template for a new project, clone the repo (`git clone https://github.com/ngriffiths21/analysis-proj-guide.git`).
 
 ## References
 
