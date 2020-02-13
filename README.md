@@ -16,23 +16,54 @@ Keep a directory of documents that run your analysis. R Markdown documents are u
 
 [1]: notebooks/ex_analysis.md
 
-### 4. Write your code so it is as readable as possible
+### 4. Carefully organize the pipeline for readability
 
 R Markdown is designed for sharing code with others by combining code, output and text into a single document. To make it as easy as possible to follow, use a predictable format.
 
-- Write functions that carry out discrete steps of the analysis and arrange them in the order they are called
-- Write each step so that it takes the full dataset as input, modifies it, and returns it
-- Write a function that composes all the steps together (this function can be placed at the top, before the steps, in order to introduce the overall process)
-- Write code that loads the data and runs the pipeline
+1. Write functions that carry out discrete steps of the analysis and arrange them in the order they are called
+2. Write a function that composes all the steps together (this function can be placed at the top, before the steps, in order to introduce the overall process)
+3. Write code that loads the data and runs the pipeline
 
 An example of this format is in [`notebooks/ex_analysis.Rmd`][1]. The goal is to present the reader with an overview at the beginning, fully explain the steps in the middle, and restrict all the side effects (file I/O, assigning global variables) to the end.
 
-Other helpful tips:
+### 5. Write readable functions
+
+The normal way to write a step of a pipeline is to have each function take the whole dataset as input, and return the new dataset as output.
+
+```r
+pipe_step <- function(df) {
+  df %>%
+    # ... do stuff ...
+}
+```
+
+An alternative is to pass the individual variables as arguments using `rlang::exec()`. Your step can name only what it needs, then append the other columns at the end.
+
+```r
+pipe_step <- function(arg_1, arg_2, ...) {
+  # ... do stuff with arg_1 and arg_2 ...
+
+  tibble(arg_1, arg_2, ...)
+}
+
+exec(pipe_step, !!!dataset)
+```
+
+This makes it very clear which variables in the dataset actually pertain to each step. It is more readable, but at the cost of needing `rlang::exec()`.
+
+Other tips:
 
 - Think carefully about naming functions and variables, since this can have a big impact on readability
 - Write short functions that only do one thing (I usually aim for <10 lines)
 
-### 5. If needed, write helper functions (but be careful)
+### 6. Break pipelines up into multiple parts
+
+Why do this?
+
+- If one part creates a dataset or other product that is useful on its own, but also used later in the analysis
+- To keep each part linear, e.g. if you need to process three separate datasets and then merge them in a final step
+
+### 7. If needed, write helper functions (but be careful)
 
 Sometimes it makes sense to write code in separate files and load them to your analysis notebook with `source()`. These functions can be stored in their own directory `R/`. **Only do this when it improves readability**. It should be easy to read the analysis without having to look up the helper function definitions.
 
@@ -42,11 +73,11 @@ Sometimes it makes sense to write code in separate files and load them to your a
 
 See the example [`R/ex_std_error.R`](R/ex_std_error.R).
 
-### 6. Write tests
+### 8. Write tests
 
 Write tests that can be loaded with `source()` and run at the end of the analysis notebooks. These can be used to check that your final dataset has the correct number of rows, has columns of the correct type, contains data within expected ranges, etc.
 
-### 7. Document if needed
+### 9. Document if needed
 
 Analysis notebooks should be (in theory) extremely readable and comprehensive, but you may want to keep a high-level summary of the project in a central document. R Markdown is great for writing documentation, too, because it can easily be converted to a PDF.
 

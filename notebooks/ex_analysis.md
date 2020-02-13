@@ -26,22 +26,25 @@ numbers.
 ``` r
 tidy_mtcars_pipe <- function(df) {
   df %>% 
-    recode_vs() %>% 
-    recode_am()
+    recode_vs() %>%
+    { exec(recode_am, !!!.) }
 }
 ```
 
 ``` r
+# normal format
 recode_vs <- function(df) {
   df %>% 
     mutate(vs = factor(vs)) %>% 
     mutate(vs = fct_recode(vs, `V` = "0", `straight` = "1"))
 }
 
-recode_am <- function(df) {
-  df %>%
-    mutate(am = factor(am)) %>% 
-    mutate(am = fct_recode(am, `auto` = "0", `man` = "1"))
+# splicing format
+recode_am <- function(am, ...) {
+  tibble(
+    am = fct_recode(factor(am), `auto` = "0", `man` = "1"),
+    ...
+  )
 }
 ```
 
@@ -130,6 +133,8 @@ test_file("../tests/ex_test_mtcars.R")
     Failed:   0
     Warnings: 0
     Skipped:  0
+    
+    Way to go!
 
 Or `assertr` for nice data verification options:
 
